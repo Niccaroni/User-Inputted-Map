@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Invasive Grasses</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+		body {background-color: powderblue;}
+		h1   {color: blue;}
+		p    {color: red;}
+		#map {
+        height: 100%;
+		}
+		html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+		}
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+	function initMap() {
+	/*
+	var scwp = {
+		info: '<strong>Sheridan County Weed and Pest</strong><br>\
+					2667 Aero Loop<br> Sheridan, WY 82801<br>\
+					<a href="https://www.scweeds.com/" target="_blank">Website</a>',
+		lat: 44.766842,
+		long: -106.967876
+	};
+	*/
+	
+	var markers = [];
+	var markersPos = [];
+
+	// Setup map
+	var map = new google.maps.Map(document.getElementById('map'), {
+		zoom: 13,
+		center: new google.maps.LatLng(44.782890, -106.967491),
+		disableDoubleClickZoom: true,
+		mapTypeId: google.maps.MapTypeId.HYBRID
+	});
+	
+	// Listener for double click marker
+	google.maps.event.addListener(map, 'dblclick', function(event) {
+		var marker = new google.maps.Marker({
+			position: event.latLng,
+			map:map
+		});
+		markers.push(marker);
+		markersPos.push([event.latLng.lat(), event.latLng.lng()]);
+		//window.parent.postMessage(marker.position, "*");
+	});
+	
+	/*
+	function placeMarker(location) {
+		var marker = new google.maps.Marker({
+		position: location, 
+		map: map
+		});
+	}
+	*/
+	
+		
+		function RemoveMarkers(controlDiv, map) {
+		
+			// Set CSS for the control border.
+			var controlUI = document.createElement('div');
+			controlUI.style.backgroundColor = '#fff';
+			controlUI.style.border = '2px solid #fff';
+			controlUI.style.borderRadius = '3px';
+			controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+			controlUI.style.cursor = 'pointer';
+			controlUI.style.marginBottom = '22px';
+			controlUI.style.margin = '8px'
+			controlUI.style.textAlign = 'center';
+			controlUI.title = 'Click to remove all markers';
+			controlDiv.appendChild(controlUI);
+
+			// Set CSS for the control interior.
+			var controlText = document.createElement('div');
+			controlText.style.color = 'rgb(25,25,25)';
+			controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+			controlText.style.fontSize = '16px';
+			controlText.style.lineHeight = '38px';
+			controlText.style.paddingLeft = '5px';
+			controlText.style.paddingRight = '5px';
+			controlText.innerHTML = 'Remove Markers';
+			controlUI.appendChild(controlText);
+
+			// Listener for 'Remove Markers' button
+			controlUI.addEventListener('click', function() {
+				for (i = 0; i < markers.length; i++) {
+					markers[i].setMap(null);
+				}
+				markers = [];
+				markersPos = [];
+			});
+		}
+	  
+	var removeMarkersDiv = document.createElement('div');
+    var removeMarkers = new RemoveMarkers(removeMarkersDiv, map);
+
+    removeMarkersDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(removeMarkersDiv);
+	
+	
+	function SubmitMarkers(controlDiv, map) {
+		
+			// Set CSS for the control border.
+			var controlUI = document.createElement('div');
+			controlUI.style.backgroundColor = '#fff';
+			controlUI.style.border = '2px solid #fff';
+			controlUI.style.borderRadius = '3px';
+			controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+			controlUI.style.cursor = 'pointer';
+			controlUI.style.marginBottom = '22px';
+			controlUI.style.margin = '8px'
+			controlUI.style.textAlign = 'center';
+			controlUI.title = 'Click to submit all markers';
+			controlDiv.appendChild(controlUI);
+
+			// Set CSS for the control interior.
+			var controlText = document.createElement('div');
+			controlText.style.color = 'rgb(25,25,25)';
+			controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+			controlText.style.fontSize = '16px';
+			controlText.style.lineHeight = '38px';
+			controlText.style.paddingLeft = '5px';
+			controlText.style.paddingRight = '5px';
+			controlText.innerHTML = 'Submit Markers';
+			controlUI.appendChild(controlText);
+
+			// Listener for 'Submit Markers' button
+			controlUI.addEventListener('click', function() {
+				// Send 'markers' to page
+				for (i = 0; i < markers.length; i++) {
+					console.log(markersPos[i])
+					markers[i].setMap(null);
+				}
+				markers = [];
+				markersPos = [];
+			});
+		}
+	
+	var submitMarkersDiv = document.createElement('div');
+    var submitMarkers = new SubmitMarkers(submitMarkersDiv, map);
+
+    submitMarkersDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(submitMarkersDiv);
+	
+}
+	
+	
+	
+	</script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEoqE_Eox6K3bqZrzm4SE73nw5Z4Z-Mbk&callback=initMap"
+    async defer></script>
+  </body>
+</html>
