@@ -23,50 +23,50 @@
     <div id="map"></div>
     <script>
 	function initMap() {
-	/*
-	var scwp = {
-		info: '<strong>Sheridan County Weed and Pest</strong><br>\
-					2667 Aero Loop<br> Sheridan, WY 82801<br>\
-					<a href="https://www.scweeds.com/" target="_blank">Website</a>',
-		lat: 44.766842,
-		long: -106.967876
-	};
-	*/
-	
-	var markers = [];
-	var markersPos = [];
+		// GLOBALS
+		var markers = [];
+		var markersPos = [];
 
-	// Setup map
-	var map = new google.maps.Map(document.getElementById('map'), {
-		zoom: 13,
-		center: new google.maps.LatLng(44.782890, -106.967491),
-		disableDoubleClickZoom: true,
-		mapTypeId: google.maps.MapTypeId.HYBRID
-	});
-	
-	// Listener for double click marker
-	google.maps.event.addListener(map, 'dblclick', function(event) {
-		var marker = new google.maps.Marker({
-			position: event.latLng,
-			map:map
+		// MAP SETUP =========================
+		var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 13,
+			center: new google.maps.LatLng(44.782890, -106.967491),
+			disableDoubleClickZoom: true,
+			mapTypeId: google.maps.MapTypeId.HYBRID
 		});
-		markers.push(marker);
-		markersPos.push([event.latLng.lat(), event.latLng.lng()]);
-		//window.parent.postMessage(marker.position, "*");
-	});
-	
-	/*
-	function placeMarker(location) {
-		var marker = new google.maps.Marker({
-		position: location, 
-		map: map
-		});
-	}
-	*/
-	
 		
+		/*
+		var scwp = {
+			info: '<strong>Sheridan County Weed and Pest</strong><br>\
+						2667 Aero Loop<br> Sheridan, WY 82801<br>\
+						<a href="https://www.scweeds.com/" target="_blank">Website</a>',
+			lat: 44.766842,
+			long: -106.967876
+		};
+		*/
+	
+		// LISTENER (DOUBLE CLICK FOR MARKER) =========================
+		google.maps.event.addListener(map, 'dblclick', function(event) {
+			var marker = new google.maps.Marker({
+				position: event.latLng,
+				map:map
+			});
+			markers.push(marker);
+			markersPos.push([event.latLng.lat(), event.latLng.lng()]);
+			//window.parent.postMessage(marker.position, "*");
+		});
+	
+		/*
+		function placeMarker(location) {
+			var marker = new google.maps.Marker({
+			position: location, 
+			map: map
+			});
+		}
+		*/
+	
+		// REMOVE MARKERS BUTTON =========================
 		function RemoveMarkers(controlDiv, map) {
-		
 			// Set CSS for the control border.
 			var controlUI = document.createElement('div');
 			controlUI.style.backgroundColor = '#fff';
@@ -91,7 +91,7 @@
 			controlText.innerHTML = 'Remove Markers';
 			controlUI.appendChild(controlText);
 
-			// Listener for 'Remove Markers' button
+			// // LISTENER (REMOVE BUTTON)
 			controlUI.addEventListener('click', function() {
 				for (i = 0; i < markers.length; i++) {
 					markers[i].setMap(null);
@@ -99,17 +99,16 @@
 				markers = [];
 				markersPos = [];
 			});
-		}
-	  
+		} // Remove Markers
+		
 	var removeMarkersDiv = document.createElement('div');
     var removeMarkers = new RemoveMarkers(removeMarkersDiv, map);
 
     removeMarkersDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(removeMarkersDiv);
 	
-	
+	// SUBMIT MARKERS BUTTON =========================
 	function SubmitMarkers(controlDiv, map) {
-		
 			// Set CSS for the control border.
 			var controlUI = document.createElement('div');
 			controlUI.style.backgroundColor = '#fff';
@@ -134,9 +133,9 @@
 			controlText.innerHTML = 'Submit Markers';
 			controlUI.appendChild(controlText);
 
-			// Listener for 'Submit Markers' button
+			// LISTENER (SUBMIT BUTTON)
 			controlUI.addEventListener('click', function() {
-				// Send 'markers' to page
+				// ADD CODE TO SEND 'markersPos' ARRAY TO WEBSITE PAGE
 				for (i = 0; i < markers.length; i++) {
 					console.log(markersPos[i])
 					markers[i].setMap(null);
@@ -144,20 +143,22 @@
 				markers = [];
 				markersPos = [];
 			});
-		}
+		} // SubmitMarkers
 	
 	var submitMarkersDiv = document.createElement('div');
     var submitMarkers = new SubmitMarkers(submitMarkersDiv, map);
 
     submitMarkersDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(submitMarkersDiv);
-	
-}
+
+
+
+} // initMap
 	
 	
 	
 	</script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=ENTER_KEY&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEoqE_Eox6K3bqZrzm4SE73nw5Z4Z-Mbk&callback=initMap"
     async defer></script>
   </body>
 </html>
