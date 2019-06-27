@@ -9,6 +9,8 @@ $w.onReady(function () {
 	var lng;
 	var markers = [];
 
+	let currentDate = new Date();
+
 	$w("#html1").onMessage( (event) => {
   		let receivedData = event.data;
 		  lat = receivedData[0];
@@ -17,6 +19,7 @@ $w.onReady(function () {
 		  //markers.push([name, phone, lat, lng]);
 
 		let newMarker = {
+			date: currentDate,
 			name: name,
 			phoneNumber: phone,
 			latitude: lat,
