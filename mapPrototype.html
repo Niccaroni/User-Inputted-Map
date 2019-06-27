@@ -135,9 +135,9 @@
 
 			// LISTENER (SUBMIT BUTTON)
 			controlUI.addEventListener('click', function() {
-				// ADD CODE TO SEND 'markersPos' ARRAY TO WEBSITE PAGE
 				for (i = 0; i < markers.length; i++) {
-					console.log(markersPos[i])
+					obj = JSON.parse(JSON.stringify(markersPos[i]));
+					window.parent.postMessage(obj, "*");
 					markers[i].setMap(null);
 				}
 				markers = [];
@@ -150,9 +150,7 @@
 
     submitMarkersDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(submitMarkersDiv);
-
-
-
+	
 } // initMap
 	
 	
